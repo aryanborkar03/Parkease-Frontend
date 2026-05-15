@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-110 -60 220 130" width="440" height="260">
+  <title>ParkEase car mark — universal transparent cutouts</title>
+  <defs>
+    <mask id="car-mask">
+      <!-- White = show orange, Black = punch hole (transparent) -->
+      <!-- Body -->
+      <polygon points="-70,8  70,8  76,38  -76,38" fill="white"/>
+      <!-- Cabin -->
+      <polygon points="-38,-44  42,-44  62,8  -58,8" fill="white"/>
+      <!-- Front bumper -->
+      <polygon points="70,8  90,14  88,38  76,38" fill="white"/>
+      <!-- Rear bumper -->
+      <polygon points="-76,38  -88,14  -70,8" fill="white"/>
+      <!-- Windshield hole — black punches through -->
+      <polygon points="-30,-38  36,-38  52,4  -44,4" fill="black"/>
+      <!-- Left wheel arch hole -->
+      <ellipse cx="-44" cy="38" rx="22" ry="14" fill="black"/>
+      <!-- Right wheel arch hole -->
+      <ellipse cx="44"  cy="38" rx="22" ry="14" fill="black"/>
+    </mask>
+  </defs>
+
+  <!-- Orange car body with holes punched via mask -->
+  <rect x="-110" y="-60" width="220" height="130" fill="#ea580c" mask="url(#car-mask)"/>
+
+  <!-- Wheels drawn on top — tyre + hub -->
+  <circle cx="-44" cy="40" r="13" fill="#1a1a1a"/>
+  <circle cx="-44" cy="40" r="6"  fill="#666"/>
+  <circle cx="44"  cy="40" r="13" fill="#1a1a1a"/>
+  <circle cx="44"  cy="40" r="6"  fill="#666"/>
+
+  <!-- Headlight -->
+  <polygon points="80,14  90,14  90,24  80,26" fill="#ffd580"/>
+  <!-- Tail light -->
+  <polygon points="-88,14  -80,14  -80,26  -88,24" fill="#cc2200"/>
+  <!-- Window highlight -->
+  <line x1="-6" y1="-36" x2="10" y2="6" stroke="#ffffff" stroke-width="2.5" opacity="0.25"/>
+</svg>
