@@ -169,19 +169,12 @@ function PassCard({ pass }) {
     <div style={{ marginBottom: 28 }}>
 
       {/* Scene wrapper — perspective */}
-      <div style={{ perspective: '1000px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
+      <div className="sub-pass-scene">
 
         {/* Card wrap — 3D tilt target */}
         <div
           ref={wrapRef}
-          style={{
-            width: 380, height: 230,
-            position: 'relative',
-            transformStyle: 'preserve-3d',
-            transition: 'none',
-            willChange: 'transform',
-            cursor: 'pointer',
-          }}
+          className="sub-pass-wrap"
           onMouseMove={onMove}
           onMouseLeave={onLeave}
         >
@@ -249,35 +242,22 @@ function PassCard({ pass }) {
       </div>
 
       {/* Info strip */}
-      <div style={{ 
-        display: 'flex', 
-        gap: 16, 
-        width: '100%',
-        maxWidth: 480, 
-        background: 'var(--surface-2)', 
-        border: '1px solid var(--border)', 
-        borderRadius: '12px', 
-        padding: '16px 24px', 
-        marginTop: 24,
-        boxShadow: '0 8px 24px rgba(0,0,0,0.06)',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
+      <div className="sub-info-strip">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           <span style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--muted)', fontFamily: 'var(--font-sans)', fontWeight: 600 }}>Days remaining</span>
           <span style={{ fontSize: 16, fontWeight: 700, color: '#ea580c', fontFamily: 'var(--font-sans)' }}>{days} days</span>
         </div>
-        <div style={{ width: 1, height: 28, background: 'var(--border)' }} />
+        <div className="sub-info-divider" />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           <span style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--muted)', fontFamily: 'var(--font-sans)', fontWeight: 600 }}>Parkings left</span>
           <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)', fontFamily: 'var(--font-sans)' }}>{remaining} <span style={{ fontSize: 12, color: 'var(--muted)' }}>/ {pass.parkingCountLimit}</span></span>
         </div>
-        <div style={{ width: 1, height: 28, background: 'var(--border)' }} />
+        <div className="sub-info-divider" />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           <span style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--muted)', fontFamily: 'var(--font-sans)', fontWeight: 600 }}>Vehicles</span>
           <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)', fontFamily: 'var(--font-sans)' }}>All covered</span>
         </div>
-        <div style={{ width: 1, height: 28, background: 'var(--border)' }} />
+        <div className="sub-info-divider" />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           <span style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--muted)', fontFamily: 'var(--font-sans)', fontWeight: 600 }}>Status</span>
           <span style={{ fontSize: 16, fontWeight: 700, color: pass.status === 'CANCELLED' ? '#f59e0b' : '#10b981', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
@@ -302,7 +282,7 @@ function TransactionHistory({ transactions }) {
   }
 
   return (
-    <div className="table-wrap">
+    <div className="table-wrap sub-table-wrap">
       <table>
         <thead>
           <tr>
@@ -383,13 +363,9 @@ function BuyPassView({ expiredPass, onPurchaseSuccess, buying, setBuying, error,
     <>
       {/* Greyed-out old pass stamp */}
       {expiredPass && (
-        <div style={{ marginBottom: 40, position: 'relative', width: 380, opacity: 0.8 }}>
+        <div className="sub-expired-wrap">
           {/* Ghost version of the card — grayscale + EXPIRED stamp */}
-          <div style={{
-            width: 380, height: 230, borderRadius: 20, overflow: 'hidden',
-            position: 'relative', opacity: 0.35, filter: 'grayscale(1)',
-            background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%)',
-          }}>
+          <div className="sub-expired-card">
             <div style={{ position: 'absolute', inset: 0, opacity: 0.07, backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
             <div style={{ position: 'absolute', inset: 0, padding: '22px 26px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', color: '#fff' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
@@ -419,19 +395,13 @@ function BuyPassView({ expiredPass, onPurchaseSuccess, buying, setBuying, error,
       )}
 
       {/* Redesigned Premium Layout */}
-      <div style={{ 
-        display: 'flex', flexWrap: 'wrap', gap: 40, alignItems: 'center',
-        background: 'linear-gradient(145deg, #121110 0%, #1a1816 100%)',
-        borderRadius: 24, padding: '48px 56px', border: '1px solid rgba(255,255,255,0.03)',
-        boxShadow: '0 24px 48px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05)',
-        position: 'relative', overflow: 'hidden'
-      }}>
+      <div className="sub-buy-layout">
         {/* Decorative Background Glows */}
         <div style={{ position: 'absolute', top: '-20%', left: '-10%', width: '50%', height: '100%', background: 'radial-gradient(circle, rgba(234, 88, 12, 0.08) 0%, transparent 60%)', pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', bottom: '-20%', right: '-10%', width: '40%', height: '80%', background: 'radial-gradient(circle, rgba(251, 146, 60, 0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
         {/* Left Column: Value Proposition */}
-        <div style={{ flex: '1 1 400px', position: 'relative', zIndex: 1 }}>
+        <div className="sub-buy-left">
           <div style={{ fontSize: '0.7rem', fontWeight: 800, letterSpacing: '0.2em', color: '#ea580c', textTransform: 'uppercase', marginBottom: 12 }}>
             Introducing
           </div>
@@ -463,7 +433,7 @@ function BuyPassView({ expiredPass, onPurchaseSuccess, buying, setBuying, error,
         </div>
 
         {/* Right Column: Checkout Card */}
-        <div style={{ flex: '0 0 340px', position: 'relative', zIndex: 1 }}>
+        <div className="sub-buy-right">
           <div style={{ 
             background: 'var(--bg)', borderRadius: 20, padding: 32, 
             border: '1px solid rgba(255,255,255,0.08)',
@@ -571,7 +541,7 @@ export default function Subscription() {
 
   useEffect(() => { loadData(); }, [loadData]);
 
-  /* Keyframe injection */
+  /* Keyframe + responsive injection */
   useEffect(() => {
     if (document.getElementById('subscription-keyframes')) return;
     const style = document.createElement('style');
@@ -583,6 +553,31 @@ export default function Subscription() {
       @keyframes slideUp { from{opacity:0;transform:translateY(32px) scale(0.96)} to{opacity:1;transform:translateY(0) scale(1)} }
       @keyframes popIn { from{opacity:0;transform:scale(0.6)} to{opacity:1;transform:scale(1)} }
       @keyframes progressBar { from{width:0%} to{width:100%} }
+
+      /* ── Subscription base (desktop identical to original) ── */
+      .sub-pass-scene   { perspective: 1000px; display: flex; flex-direction: column; align-items: center; gap: 0; }
+      .sub-pass-wrap    { width: 380px; height: 230px; position: relative; transform-style: preserve-3d; transition: none; will-change: transform; cursor: pointer; }
+      .sub-info-strip   { display: flex; gap: 16px; width: 100%; max-width: 480px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 24px; margin-top: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.06); justify-content: space-between; align-items: center; }
+      .sub-info-divider { width: 1px; height: 28px; background: var(--border); flex-shrink: 0; }
+      .sub-expired-wrap { margin-bottom: 40px; position: relative; width: 380px; opacity: 0.8; }
+      .sub-expired-card { width: 380px; height: 230px; border-radius: 20px; overflow: hidden; position: relative; opacity: 0.35; filter: grayscale(1); background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%); }
+      .sub-buy-layout   { display: flex; flex-wrap: wrap; gap: 40px; align-items: center; background: linear-gradient(145deg, #121110 0%, #1a1816 100%); border-radius: 24px; padding: 48px 56px; border: 1px solid rgba(255,255,255,0.03); box-shadow: 0 24px 48px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05); position: relative; overflow: hidden; }
+      .sub-buy-left     { flex: 1 1 300px; min-width: 0; position: relative; z-index: 1; }
+      .sub-buy-right    { flex: 1 1 280px; max-width: 340px; min-width: 0; position: relative; z-index: 1; }
+      .sub-active-header{ margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+      .sub-table-wrap   { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+      /* ── Mobile: genuine phone viewport (<= 560px) ── */
+      @media (max-width: 560px) {
+        .sub-pass-scene   { perspective: 600px; }
+        .sub-pass-wrap    { width: calc(100vw - 48px); max-width: 380px; height: auto; aspect-ratio: 380 / 230; }
+        .sub-info-strip   { flex-wrap: wrap; gap: 10px 16px; padding: 14px 16px; max-width: 100%; }
+        .sub-info-divider { display: none; }
+        .sub-expired-wrap { width: calc(100vw - 48px); max-width: 380px; }
+        .sub-expired-card { width: 100%; height: auto; aspect-ratio: 380 / 230; }
+        .sub-buy-layout   { padding: 28px 20px; gap: 24px; border-radius: 18px; }
+        .sub-buy-right    { max-width: 100%; }
+      }
     `;
     document.head.appendChild(style);
   }, []);
@@ -687,7 +682,7 @@ export default function Subscription() {
           {/* Active pass → show card + history */}
           {isActive && (
             <>
-              <div style={{ marginBottom: 32, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div className="sub-active-header">
                 <div>
                   <h1 style={{ 
                     fontFamily: 'var(--font-display)', 
