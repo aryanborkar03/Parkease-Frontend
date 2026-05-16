@@ -3,8 +3,8 @@
  * All calls now go through Vercel rewrite proxy at /api
  */
 
-export const GATEWAY_URL = '/api';
-export const AUTH_URL = '/api';
+export const GATEWAY_URL = import.meta.env.VITE_API_BASE_URL;
+export const AUTH_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Authentication token helper methods
 export const getToken = () => localStorage.getItem('accessToken');
