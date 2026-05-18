@@ -462,7 +462,7 @@ export default function LoginPage() {
             <button
               type="button"
               style={{ width: '100%', height: 44, background: '#141311', color: '#fff', border: 'none', borderRadius: 999, fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.06em', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}
-              onClick={() => window.location.href = import.meta.env.VITE_GOOGLE_AUTH_URL} 
+              onClick={() => window.location.href = 'http://localhost:8081/oauth2/authorization/google'}
             >
               <span style={{ fontFamily: 'sans-serif', fontWeight: 900, fontSize: 16 }}>G</span>
               Continue with Google

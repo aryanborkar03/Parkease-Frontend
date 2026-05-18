@@ -1,38 +1,33 @@
 /**
  * API Configuration
- * All calls now go through Vercel rewrite proxy at /api
+ * Auth calls route directly to auth-service
+ * All other calls route through the API gateway
  */
 
-export const GATEWAY_URL = import.meta.env.VITE_API_BASE_URL;
-export const AUTH_URL = import.meta.env.VITE_API_BASE_URL;
+export const GATEWAY_URL  = 'http://16.171.33.187:8080';
+export const AUTH_URL     = 'http://16.171.33.187:8081';
 
 // Authentication token helper methods
-export const getToken = () => localStorage.getItem('accessToken');
-export const getRole = () => localStorage.getItem('role');
-export const getEmail = () => localStorage.getItem('email');
+export const getToken    = () => localStorage.getItem('accessToken');
+export const getRole     = () => localStorage.getItem('role');
+export const getEmail    = () => localStorage.getItem('email');
 export const getUserName = () => localStorage.getItem('fullName');
 export const isSuspended = () => localStorage.getItem('suspended') === 'true';
 
 export const saveAuth = (data) => {
-  localStorage.setItem('accessToken', data.accessToken);
+  localStorage.setItem('accessToken',  data.accessToken);
   localStorage.setItem('refreshToken', data.refreshToken);
-  localStorage.setItem('role', data.role);
-  localStorage.setItem('email', data.email);
-  localStorage.setItem('fullName', data.fullName);
-  localStorage.setItem('userId', data.userId);
-  const isSuspendedUser =
-    data.suspended === true ||
-    data.suspended === 'true' ||
-    data.isSuspended === true ||
-    data.isSuspended === 'true' ||
-    data.active === false ||
-    data.active === 'false';
-  localStorage.setItem('suspended', isSuspendedUser);
+  localStorage.setItem('role',         data.role);
+  localStorage.setItem('email',        data.email);
+  localStorage.setItem('fullName',     data.fullName);
+  localStorage.setItem('userId',       data.userId);
+  const isSuspendedUser = data.suspended === true || data.suspended === 'true' || data.isSuspended === true || data.isSuspended === 'true' || data.active === false || data.active === 'false';
+  localStorage.setItem('suspended',    isSuspendedUser);
 };
 
 export const clearAuth = () => {
-  ['accessToken', 'refreshToken', 'role', 'email', 'fullName', 'userId', 'suspended']
-    .forEach((k) => localStorage.removeItem(k));
+  ['accessToken','refreshToken','role','email','fullName','userId','suspended']
+    .forEach(k => localStorage.removeItem(k));
 };
 
 export const isLoggedIn = () => !!getToken();
@@ -43,7 +38,7 @@ export const apiFetch = async (path, options = {}, baseUrl = GATEWAY_URL) => {
 
   const headers = {
     'Content-Type': 'application/json',
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
     ...(options.headers || {}),
   };
 
@@ -59,14 +54,14 @@ export const apiFetch = async (path, options = {}, baseUrl = GATEWAY_URL) => {
 
   if (!response.ok) {
     const message = data.message || `Request failed: ${response.status}`;
-
+    
     if (response.status === 401 && message.includes('suspended')) {
       if (!isSuspended()) {
         localStorage.setItem('suspended', 'true');
         window.location.reload();
       }
     }
-
+    
     throw new Error(message);
   }
 
@@ -74,15 +69,16 @@ export const apiFetch = async (path, options = {}, baseUrl = GATEWAY_URL) => {
 };
 
 // Convenience HTTP methods for API interaction
+// api → goes through gateway (port 8080)
 export const api = {
-  get: (path) => apiFetch(path),
-  post: (path, body) => apiFetch(path, { method: 'POST', body: JSON.stringify(body) }),
-  put: (path, body) => apiFetch(path, { method: 'PUT', body: JSON.stringify(body) }),
-  delete: (path) => apiFetch(path, { method: 'DELETE' }),
-  download: (path) => apiFetch(path, { raw: true }),
+  get:      (path)       => apiFetch(path),
+  post:     (path, body) => apiFetch(path, { method: 'POST',   body: JSON.stringify(body) }),
+  put:      (path, body) => apiFetch(path, { method: 'PUT',    body: JSON.stringify(body) }),
+  delete:   (path)       => apiFetch(path, { method: 'DELETE' }),
+  download: (path)       => apiFetch(path, { raw: true }),
 };
 
-// authApi also routes through the same Vercel proxy
+// authApi routes through the gateway (port 8080)
 export const authApi = {
-  post: (path, body) => apiFetch(path, { method: 'POST', body: JSON.stringify(body) }, AUTH_URL),
-};  
+  post: (path, body) => apiFetch(path, { method: 'POST', body: JSON.stringify(body) }, GATEWAY_URL),
+};
