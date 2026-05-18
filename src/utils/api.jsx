@@ -4,8 +4,8 @@
  * All other calls route through the API gateway
  */
 
-export const GATEWAY_URL  = 'http://16.171.33.187:8080';
-export const AUTH_URL     = 'http://16.171.33.187:8081';
+export const GATEWAY_URL  = 'https://51.21.141.9.nip.io';
+export const AUTH_URL     = 'https://51.21.141.9.nip.io';
 
 // Authentication token helper methods
 export const getToken    = () => localStorage.getItem('accessToken');
